@@ -1,9 +1,9 @@
 # PHP String
 [![Travis](https://travis-ci.org/jansenfelipe/phpstring.svg?branch=2.0)](https://travis-ci.org/jansenfelipe/phpstring)
 [![Latest Stable Version](https://poser.pugx.org/jansenfelipe/phpstring/v/stable.svg)](https://packagist.org/packages/jansenfelipe/phpstring) 
-[![Total Downloads](https://poser.pugx.org/jansenfelipe/cnpj-gratis/downloads.svg)](https://packagist.org/packages/jansenfelipe/phpstring) 
-[![Latest Unstable Version](https://poser.pugx.org/jansenfelipe/cnpj-gratis/v/unstable.svg)](https://packagist.org/packages/jansenfelipe/cnpj-gratis)
-[![MIT license](https://poser.pugx.org/jansenfelipe/cnpj-gratis/license.svg)](http://opensource.org/licenses/MIT)
+[![Total Downloads](https://poser.pugx.org/jansenfelipe/phpstring/downloads.svg)](https://packagist.org/packages/jansenfelipe/phpstring) 
+[![Latest Unstable Version](https://poser.pugx.org/jansenfelipe/phpstring/v/unstable.svg)](https://packagist.org/packages/jansenfelipe/phpstring)
+[![MIT license](https://poser.pugx.org/jansenfelipe/phpstring/license.svg)](http://opensource.org/licenses/MIT)
 
 Create objects filling attribute classes with string data
 
