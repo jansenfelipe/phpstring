@@ -1,4 +1,4 @@
-# PHPString
+# PHP String
 
 Create objects filling attribute classes with string data
 
