@@ -1,5 +1,5 @@
 # PHP String
-[![Travis](https://travis-ci.org/jansenfelipe/phpstring.svg?branch=2.0)](https://travis-ci.org/jansenfelipe/phpstring)
+[![Travis](https://travis-ci.org/jansenfelipe/phpstring.svg?branch=1.0)](https://travis-ci.org/jansenfelipe/phpstring)
 [![Latest Stable Version](https://poser.pugx.org/jansenfelipe/phpstring/v/stable.svg)](https://packagist.org/packages/jansenfelipe/phpstring) 
 [![Total Downloads](https://poser.pugx.org/jansenfelipe/phpstring/downloads.svg)](https://packagist.org/packages/jansenfelipe/phpstring) 
 [![Latest Unstable Version](https://poser.pugx.org/jansenfelipe/phpstring/v/unstable.svg)](https://packagist.org/packages/jansenfelipe/phpstring)
