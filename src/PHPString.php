@@ -45,6 +45,9 @@ class PHPString
 
     /**
      * Convert string to object
+     *
+     * @param $string
+     * @return object
      */
     public function toObject($string)
     {
@@ -106,6 +109,9 @@ class PHPString
 
     /**
      * Convert object to string
+     *
+     * @param $object
+     * @return string
      */
     public function toString($object)
     {
@@ -166,5 +172,28 @@ class PHPString
         }
 
         return $string;
+    }
+
+    /**
+     * Gest size layout
+     *
+     * @return int
+     */
+    public function getSize()
+    {
+        $i = 0;
+
+        foreach($this->reflectionClass->getProperties() as $reflectionProperty)
+        {
+            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation)
+            {
+                if ($propertyAnnotation instanceof Layout)
+                {
+                    $i += $propertyAnnotation->size;
+                }
+            }
+        }
+
+        return $i;
     }
 }
