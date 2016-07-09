@@ -175,7 +175,7 @@ class PHPString
     }
 
     /**
-     * Gest size layout
+     * Get size layout
      *
      * @return int
      */
