@@ -56,7 +56,7 @@ class Event
 $parser = new PHPString(Event::class);
 $event = $parser->toObject("BH Bike Show        20160621002000Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat augue at hendrerit posuere.");
 
-echo $parser->getSize(); //output: 115
+echo $parser->getSize(); //output: 134
 ```
 
 #### String <- Object
