@@ -66,7 +66,7 @@ class PHPString
                     /*
                      * Date
                      */
-                    if ($propertyAnnotation instanceof Date)
+                    if ($propertyAnnotation instanceof Date && strlen(trim($value)) > 0)
                         $reflectionProperty->setValue($object, Carbon::createFromFormat($propertyAnnotation->format, $value));
 
                     /*
