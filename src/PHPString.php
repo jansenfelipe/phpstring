@@ -160,8 +160,6 @@ class PHPString
                         if (!is_numeric($value))
                             throw new Exception("$value is not numeric");
 
-                        $value = (floor($value) == $value)?intval($value):floatval($value);
-
                         if($propertyAnnotation->decimals > 0)
                             $value = number_format($value, $propertyAnnotation->decimals, $propertyAnnotation->decimal_separator, '');
 
