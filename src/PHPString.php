@@ -83,17 +83,17 @@ class PHPString
                         if(!is_numeric($value))
                             throw new Exception("[$value] is not numeric");
 
-                        $formated = (floor($value) == $value)?intval($value):floatval($value);
+                        $value = ltrim($value, '0');
 
-                        if($propertyAnnotation->decimals > 0 && is_int($formated))
+                        if($propertyAnnotation->decimals > 0)
                         {
                             if($propertyAnnotation->decimals >= strlen($value))
                                 throw new Exception("Number of decimal places greater than the value [$value]");
 
-                            $formated = floatval(substr($value, 0, strlen($value)-$propertyAnnotation->decimals) .'.'. substr($value, $propertyAnnotation->decimals*-1));
+                            $value = floatval(substr($value, 0, strlen($value)-$propertyAnnotation->decimals) .'.'. substr($value, $propertyAnnotation->decimals*-1));
                         }
 
-                        $reflectionProperty->setValue($object, $formated);
+                        $reflectionProperty->setValue($object, $value);
                     }
 
 
