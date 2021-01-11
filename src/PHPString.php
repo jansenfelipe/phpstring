@@ -149,8 +149,13 @@ class PHPString
                     /*
                      * Text
                      */
-                    if ($propertyAnnotation instanceof Text)
+                    if ($propertyAnnotation instanceof Text){
+
+                        if(strlen($value) > $propertyAnnotation->size)
+                            $value = substr($value, 0, $propertyAnnotation->size);
+                        
                         $string .= str_pad($value, $propertyAnnotation->size, ' ', STR_PAD_RIGHT);
+                    }
 
                     /*
                      * Numeric
