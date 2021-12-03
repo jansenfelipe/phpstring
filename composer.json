@@ -9,7 +9,7 @@
     "require": {
         "php": ">=5.3.2",
         "doctrine/common": "^2.6",
-        "nesbot/carbon": "^1.21",
+        "nesbot/carbon": "^1.21|^2",
 		"symfony/console": "~2.8"
     },
     "require-dev": {
