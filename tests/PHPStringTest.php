@@ -4,14 +4,14 @@ namespace JansenFelipe\PHPString;
 
 use Carbon\Carbon;
 use JansenFelipe\PHPString\Test\Event;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class PHPStringTest extends PHPUnit_Framework_TestCase
+class PHPStringTest extends TestCase
 {
     public function testToObject()
     {
         $parser = new PHPString('JansenFelipe\PHPString\Test\Event');
-        $event = $parser->toObject("BH Bike Show        20160621002000Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat augue at hendrerit posuere.");
+        $event = $parser->toObject('BH Bike Show        20160621002000Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat augue at hendrerit posuere.');
 
         $this->assertEquals('BH Bike Show', $event->name);
         $this->assertEquals('20160621', $event->date->format('Ymd'));
