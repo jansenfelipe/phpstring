@@ -29,14 +29,14 @@ class PHPString
      */
     public function __construct($class)
     {
-        if(!class_exists($class))
+        if (!class_exists($class)) {
             throw new Exception('Class not exits');
-
+        }
         $this->class = $class;
 
-        AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Date.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Numeric.php');
-        AnnotationRegistry::registerFile(__DIR__ . '/Annotations/Text.php');
+        AnnotationRegistry::registerFile(__DIR__.'/Annotations/Date.php');
+        AnnotationRegistry::registerFile(__DIR__.'/Annotations/Numeric.php');
+        AnnotationRegistry::registerFile(__DIR__.'/Annotations/Text.php');
 
         $this->annotationReader = new AnnotationReader();
 
@@ -44,59 +44,54 @@ class PHPString
     }
 
     /**
-     * Convert string to object
+     * Convert string to object.
      *
      * @param $string
+     *
      * @return object
      */
     public function toObject($string)
     {
-        $object = new $this->class;
+        $object = new $this->class();
 
         $i = 0;
 
-        foreach($this->reflectionClass->getProperties() as $reflectionProperty)
-        {
-            foreach($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation)
-            {
-                if ($propertyAnnotation instanceof Layout)
-                {
+        foreach ($this->reflectionClass->getProperties() as $reflectionProperty) {
+            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof Layout) {
                     $value = substr($string, $i, $propertyAnnotation->size);
 
                     /*
                      * Date
                      */
-                    if ($propertyAnnotation instanceof Date && strlen(trim($value)) > 0)
+                    if ($propertyAnnotation instanceof Date && strlen(trim($value)) > 0) {
                         $reflectionProperty->setValue($object, Carbon::createFromFormat($propertyAnnotation->format, $value));
+                    }
 
                     /*
                      * Text
                      */
-                    if ($propertyAnnotation instanceof Text)
+                    if ($propertyAnnotation instanceof Text) {
                         $reflectionProperty->setValue($object, trim($value));
+                    }
 
                     /*
                      * Numeric
                      */
-                    if ($propertyAnnotation instanceof Numeric)
-                    {
-                        if(!is_numeric($value))
-                            throw new Exception("[$value] is not numeric");
+                    if ($propertyAnnotation instanceof Numeric) {
+                        if (is_numeric($value)) {
+                            $value = ltrim($value, '0');
 
-                        $value = ltrim($value, '0');
-
-                        if($propertyAnnotation->decimals > 0)
-                        {
-                            if($propertyAnnotation->decimals >= strlen($value))
-                                throw new Exception("Number of decimal places greater than the value [$value]");
-
-                            $value = floatval(substr($value, 0, strlen($value)-$propertyAnnotation->decimals) .'.'. substr($value, $propertyAnnotation->decimals*-1));
+                            if ($propertyAnnotation->decimals > 0) {
+                                if ($propertyAnnotation->decimals >= strlen($value)) {
+                                    throw new Exception("Number of decimal places greater than the value [$value]");
+                                }
+                                $value = floatval(substr($value, 0, strlen($value) - $propertyAnnotation->decimals).'.'.substr($value, $propertyAnnotation->decimals * -1));
+                            }
                         }
 
                         $reflectionProperty->setValue($object, $value);
                     }
-
-
 
                     //Increment.
                     $i += $propertyAnnotation->size;
@@ -108,28 +103,25 @@ class PHPString
     }
 
     /**
-     * Convert object to string
+     * Convert object to string.
      *
      * @param $object
+     *
      * @return string
      */
     public function toString($object)
     {
-        if(get_class($object) != $this->class)
+        if (get_class($object) != $this->class) {
             throw new Exception("The object is not an instance of $this->class");
+        }
+        $string = '';
 
-        $string = "";
-
-        foreach($this->reflectionClass->getProperties() as $reflectionProperty)
-        {
-            foreach($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation)
-            {
-                if ($propertyAnnotation instanceof Layout)
-                {
+        foreach ($this->reflectionClass->getProperties() as $reflectionProperty) {
+            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof Layout) {
                     $value = $reflectionProperty->getValue($object);
 
-                    if(is_null($value))
-                    {
+                    if (is_null($value)) {
                         $filler = ($propertyAnnotation instanceof Numeric) ? '0' : ' ';
                         $string .= str_pad('', $propertyAnnotation->size, $filler, STR_PAD_RIGHT);
                         break;
@@ -138,35 +130,34 @@ class PHPString
                     /*
                      * Date
                      */
-                    if ($propertyAnnotation instanceof Date)
-                    {
-                        if(!($value instanceof Carbon))
+                    if ($propertyAnnotation instanceof Date) {
+                        if (!($value instanceof Carbon)) {
                             throw new Exception("$value is not an instance of Carbon");
-
+                        }
                         $string .= $value->format($propertyAnnotation->format);
                     }
 
                     /*
                      * Text
                      */
-                    if ($propertyAnnotation instanceof Text){
-
-                        if(strlen($value) > $propertyAnnotation->size)
+                    if ($propertyAnnotation instanceof Text) {
+                        if (strlen($value) > $propertyAnnotation->size) {
                             $value = substr($value, 0, $propertyAnnotation->size);
-                        
+                        }
+
                         $string .= str_pad($value, $propertyAnnotation->size, ' ', STR_PAD_RIGHT);
                     }
 
                     /*
                      * Numeric
                      */
-                    if ($propertyAnnotation instanceof Numeric)
-                    {
-                        if (!is_numeric($value))
+                    if ($propertyAnnotation instanceof Numeric) {
+                        if (!is_numeric($value)) {
                             throw new Exception("$value is not numeric");
-
-                        if($propertyAnnotation->decimals > 0)
+                        }
+                        if ($propertyAnnotation->decimals > 0) {
                             $value = number_format($value, $propertyAnnotation->decimals, $propertyAnnotation->decimal_separator, '');
+                        }
 
                         $string .= str_pad($value, $propertyAnnotation->size, '0', STR_PAD_LEFT);
                     }
@@ -178,7 +169,7 @@ class PHPString
     }
 
     /**
-     * Get size layout
+     * Get size layout.
      *
      * @return int
      */
@@ -186,12 +177,9 @@ class PHPString
     {
         $i = 0;
 
-        foreach($this->reflectionClass->getProperties() as $reflectionProperty)
-        {
-            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation)
-            {
-                if ($propertyAnnotation instanceof Layout)
-                {
+        foreach ($this->reflectionClass->getProperties() as $reflectionProperty) {
+            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof Layout) {
                     $i += $propertyAnnotation->size;
                 }
             }
